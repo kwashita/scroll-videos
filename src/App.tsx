@@ -12,20 +12,24 @@ import banner from "./assets/banner.png";
 
 function App() {
   const [isFixed, setIsFixed] = useState<boolean>(false);
-  const [oldY, setOldY] = useState<number>(0);
+  const [hidden, setHidden] = useState<boolean>(false);
+  const oldY = useRef<number>(0);
   const scrollViewRef = useRef<HTMLDivElement>(null);
+  console.log("rendering");
 
   const onScroll = () => {
     if (scrollViewRef.current) {
       const { top: newY } = scrollViewRef.current.getBoundingClientRect();
-      console.log(newY);
+
+      const delta = newY - oldY.current;
+      oldY.current = newY;
+      setHidden(delta < 0);
+      // if (delta < 0) {
+      //   setHidden(true);
+      // } else {
+      //   setHidden(false);
+      // }
     }
-
-    // const { top } = document
-    //   .querySelector("header-container")
-    //   ?.getBoundingClientRect();
-
-    // console.log(top);
   };
 
   useEffect(() => {
@@ -38,9 +42,9 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <div className="header-container">
+      <header className={hidden ? styles.hidden : ""}>
         <Header />
-      </div>
+      </header>
       <section className="content">
         <img src={banner} alt="banner" />
         <p className="ine"></p>
