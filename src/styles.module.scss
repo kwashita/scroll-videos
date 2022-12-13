@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.App {
+  background-color: mediumseagreen;
+  color: white;
+  .scroll-container {
+    padding: 15px;
+  }
+  img {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+}
